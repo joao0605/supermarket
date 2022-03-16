@@ -103,6 +103,31 @@ public class Supermarket {
                         System.out.println("Bem vindo, João!!\n");
                         System.out.println("Este é o nosso estoque de produtos:");
                         System.out.println(product);
+                        char add;
+
+                        do {
+                            String name;
+                            Double price, quantity;
+                            int code;
+
+
+                            System.out.print("Digite o código do novo produto: ");
+                            code = sc.nextInt();
+                            System.out.print("Digite o nome: ");
+                            name = sc.next();
+                            System.out.print("Digite o preço unitário: ");
+                            price = sc.nextDouble();
+                            System.out.print("Digite a quantidade disponível: ");
+                            quantity = sc.nextDouble();
+                            System.out.print("Deseja adicionar um novo produto? Y/N ");
+                            add = sc.next().charAt(0);
+
+                            Product newProduct = new Product(code, name, price, quantity);
+                            product.add(newProduct);
+
+                        } while (add == 'Y' || add == 'y');
+                        System.out.println("Este é o nosso estoque de produtos atualizado:");
+                        System.out.println(product);
 
                         loop = true;
                     } else {

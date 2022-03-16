@@ -1,5 +1,7 @@
 package entities;
 
+import java.util.Objects;
+
 public class Product {
     protected Integer code;
     protected String name;
@@ -60,4 +62,5 @@ public class Product {
                 ", Preço unitário: " + price +
                 ", Quantidade disponível: " + quantity + '}';
     }
+
 }
