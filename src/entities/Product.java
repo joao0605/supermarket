@@ -52,4 +52,12 @@ public class Product {
     public Double getTotalPrice() {
         return price * quantity;
         }
+
+    @Override
+    public String toString() {
+        return "\n Produto: " + name +
+                ", Código de referência: " + code +
+                ", Preço unitário: " + price +
+                ", Quantidade disponível: " + quantity + '}';
+    }
 }

@@ -11,7 +11,19 @@ public class Supermarket {
     public static void main(String[] args) {
 
         Scanner sc = new Scanner(System.in);
-        Product Rice = new Product(1, "Arroz", 5.99, 1.0);
+        Product rice = new Product(1, "Arroz", 5.99, 1.0);
+        Product cheese = new Product(2, "Queijo", 2.99, 1.0);
+        Product milk = new Product(3, "Leite", 2.50, 1.0);
+        Product bread = new Product(4, "Pão", 0.75, 10.0);
+
+
+
+        ArrayList<Product> product = new ArrayList<>();
+        product.add(rice);
+        product.add(cheese);
+        product.add(milk);
+        product.add(bread);
+
         char n;
 
         System.out.println("Seja bem vindo(a) ao Supermercado do João");
@@ -52,13 +64,8 @@ public class Supermarket {
                 System.out.println("Não entendi sua resposta :/");
             }
         } while (!(n == 'y' || n == 'Y' || n == 'n' || n == 'N'));
-        menu();
 
-        sc.close();
-    }
 
-    public static void menu() {
-        Scanner sc = new Scanner(System.in);
         int ans;
 
         System.out.println("Certo, o que você deseja fazer?");
@@ -69,6 +76,7 @@ public class Supermarket {
         switch (ans) {
             case 1:
                 System.out.println("Esta é a nossa lista de produtos disponíveis no momento:");
+                System.out.println(product);
                 //exibir aqui a lista de produtos
                 break;
             case 2:
@@ -93,4 +101,5 @@ public class Supermarket {
         }
         sc.close();
     }
+
 }
