@@ -5,11 +5,12 @@ import entities.Product;
 
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class Supermarket {
     public static void main(String[] args) {
-
+        Locale.setDefault(Locale.US);
         Scanner sc = new Scanner(System.in);
 
         Client client1 = new Client("John", "123456789", true);
@@ -17,6 +18,7 @@ public class Supermarket {
         ArrayList<Client> client = new ArrayList<>();
         client.add(client1);
 
+// Produtos pré configurados e adicionados à lista
 
         Product rice = new Product(1, "Arroz", 5.99, 1.0);
         Product cheese = new Product(2, "Queijo", 2.99, 1.0);
@@ -29,7 +31,7 @@ public class Supermarket {
         product.add(milk);
         product.add(bread);
 
-        char n;
+        char n; //Será utilizada abaixo em menu
 
         System.out.println("Seja bem vindo(a) ao Supermercado do João");
         do {
@@ -51,7 +53,7 @@ public class Supermarket {
                 do {
                     System.out.print("Deseja realizar seu cadastro? Y/N ");
                     register = sc.next().charAt(0);
-                    if (register == 'Y' || register == 'y') {
+                    if (register == 'Y' || register == 'y') { //"página" de cadastro
                         String name;
 
                         System.out.println("Ótimo, precisamos de apenas alguns dados. Vamos lá!!");
@@ -67,7 +69,7 @@ public class Supermarket {
 
                         System.out.println(newClient.welcome());
 
-                        //registrar
+
                     } else if (register == 'N' || register == 'n') {
                         System.out.println("Tudo bem, vamos seguir com as compras sem efetuar o registro :D");
                     } else {
@@ -84,15 +86,16 @@ public class Supermarket {
 
         System.out.println("\nCerto, o que você deseja fazer?");
         System.out.println("1 - Comprar produtos");
-        System.out.println("2 - Adicionar produtos novos");
+        System.out.println("2 - Adicionar novos produtos ao estoque");
+        System.out.println("3 - Remover produtos do estoque");
         ans = sc.nextInt();
 
         switch (ans) {
-            case 1:
+            case 1: // opção de compra
                 System.out.println("Esta é a nossa lista de produtos disponíveis no momento:");
                 System.out.println(product);
                 break;
-            case 2:
+            case 2: //opção para "administrador" adicionar novos produtos ao estoque
                 String password;
                 boolean loop;
                 do {
@@ -119,15 +122,56 @@ public class Supermarket {
                             price = sc.nextDouble();
                             System.out.print("Digite a quantidade disponível: ");
                             quantity = sc.nextDouble();
-                            System.out.print("Deseja adicionar um novo produto? Y/N ");
-                            add = sc.next().charAt(0);
+
 
                             Product newProduct = new Product(code, name, price, quantity);
                             product.add(newProduct);
 
+                            System.out.println("Este é o nosso estoque de produtos atualizado:");
+                            System.out.println(product);
+
+                            System.out.print("Deseja adicionar um novo produto? Y/N ");
+                            add = sc.next().charAt(0);
+
                         } while (add == 'Y' || add == 'y');
-                        System.out.println("Este é o nosso estoque de produtos atualizado:");
+
+
+                        loop = true;
+                    } else {
+                        System.out.println("Senha incorreta!!");
+                        loop = false;
+                    }
+                } while (loop == false);
+                break;
+            case 3:
+                do {
+                    System.out.println("Entre com a sua senha de administrador:");
+                    password = sc.next();
+                    if (password.equals("123456")) {
+                        System.out.println("### PÁGINA DE ADMINISTRADOR ###");
+                        System.out.println("Bem vindo, João!!\n");
+                        System.out.println("Este é o nosso estoque de produtos:");
                         System.out.println(product);
+                        char rmv;
+
+                        do {
+
+                            int code;
+
+                            System.out.print("Digite a posição do produto que deseja remover: ");
+                            code = sc.nextInt();
+
+                            System.out.println("Este é o nosso estoque de produtos atualizado:");
+                            System.out.println(product);
+
+                            System.out.print("Deseja adicionar um novo produto? Y/N ");
+                            rmv = sc.next().charAt(0);
+
+
+                            product.remove(code - 1);
+
+                        } while (rmv == 'Y' || rmv == 'y');
+
 
                         loop = true;
                     } else {
