@@ -3,10 +3,7 @@ package program;
 import entities.Client;
 import entities.Product;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Locale;
-import java.util.Scanner;
+import java.util.*;
 
 public class Supermarket {
     public static void main(String[] args) {
@@ -17,19 +14,27 @@ public class Supermarket {
 
         ArrayList<Client> client = new ArrayList<>();
         client.add(client1);
+        String cpf = null;
 
 // Produtos pré configurados e adicionados à lista
 
-        Product rice = new Product(1, "Arroz", 5.99, 1.0);
-        Product cheese = new Product(2, "Queijo", 2.99, 1.0);
-        Product milk = new Product(3, "Leite", 2.50, 1.0);
-        Product bread = new Product(4, "Pão", 0.75, 10.0);
+        Product rice = new Product(1, "Arroz", 5.99);
+        Product cheese = new Product(2, "Queijo", 2.99);
+        Product milk = new Product(3, "Leite", 2.50);
+        Product bread = new Product(4, "Pão", 0.75);
+        Product egg = new Product(5, "Ovo", 0.15);
+        Product butter = new Product(6, "Manteiga", 1.25);
+        Product juice = new Product(7, "Suco", 0.5);
 
-        ArrayList<Product> product = new ArrayList<>();
+
+        List<Product> product = new ArrayList<>();
         product.add(rice);
         product.add(cheese);
         product.add(milk);
         product.add(bread);
+        product.add(egg);
+        product.add(butter);
+        product.add(juice);
 
         char n; //Será utilizada abaixo em menu
 
@@ -38,7 +43,7 @@ public class Supermarket {
 
             System.out.print("Você já é membro do nosso clube? Y/N ");
             n = sc.next().charAt(0);
-            String cpf;
+
 
             if (n == 'y' || n == 'Y') {
                 System.out.println("Perfeito, insira aqui o seu CPF");
@@ -69,7 +74,6 @@ public class Supermarket {
 
                         System.out.println(newClient.welcome());
 
-
                     } else if (register == 'N' || register == 'n') {
                         System.out.println("Tudo bem, vamos seguir com as compras sem efetuar o registro :D");
                     } else {
@@ -92,8 +96,66 @@ public class Supermarket {
 
         switch (ans) {
             case 1: // opção de compra
-                System.out.println("Esta é a nossa lista de produtos disponíveis no momento:");
-                System.out.println(product);
+                List<Product> shoplist = new ArrayList<>();
+                int shopCode;
+                char newShop;
+
+
+                do {
+                    System.out.println("Esta é a nossa lista de produtos disponíveis no momento:");
+                    System.out.println(product);
+
+                    System.out.println("---------------------------------------------------------");
+                    System.out.print("Digite o código do produto que você deseja adicionar ao seu carrinho de compras: ");
+                    shopCode = sc.nextInt();
+
+                    for (Product item : product) {
+                        if (item.getCode() == shopCode) {
+                            shoplist.add(item);
+                        }
+                    }
+                    System.out.println("CARRINHO");
+                    System.out.println(shoplist);
+                    System.out.println();
+
+                    System.out.print("Deseja adicionair mais um item ao carrinho? Y/N ");
+                    newShop = sc.next().charAt(0);
+                } while (newShop == 'y' || newShop == 'Y');
+
+                System.out.println();
+                System.out.println("RESUMO DA COMPRA");
+                System.out.println(shoplist);
+                Double finalPrice = 0.0;
+
+                for (Product total: shoplist) {
+                    finalPrice += total.getPrice();
+                    }
+
+                System.out.println("----------------------------------");
+                System.out.printf("Valor total da compra: R$ %.2f", finalPrice);
+                System.out.println();
+                System.out.println("----------------------------------");
+
+                if (cpf != null) { //não consegui puxar os dados do newClient aqui
+
+                    Double clubMember = finalPrice * 0.9;
+                    System.out.printf("Por ser membro do nosso clube, você tem direito a 10/100 de desconto e o valor final da sua compra é de R$ %.2f", clubMember);
+                }
+                System.out.println();
+                System.out.println("----------------");
+                System.out.println("Forma de pagamento");
+                System.out.println("1 - Dinheiro");
+                System.out.println("2 - Cartão");
+                int payment = sc.nextInt();
+                System.out.println("Você escolheu: ");
+                if (payment == 1) {
+                    System.out.println("Dinheiro! ");
+                }else {
+                    System.out.println("Cartão! ");
+                }
+
+                System.out.println("Finalize a compra com nosso funcionário e volte sempre!");
+
                 break;
             case 2: //opção para "administrador" adicionar novos produtos ao estoque
                 String password;
@@ -117,14 +179,14 @@ public class Supermarket {
                             System.out.print("Digite o código do novo produto: ");
                             code = sc.nextInt();
                             System.out.print("Digite o nome: ");
-                            name = sc.next();
+                            sc.nextLine();
+                            name = sc.nextLine();
                             System.out.print("Digite o preço unitário: ");
                             price = sc.nextDouble();
-                            System.out.print("Digite a quantidade disponível: ");
-                            quantity = sc.nextDouble();
 
 
-                            Product newProduct = new Product(code, name, price, quantity);
+
+                            Product newProduct = new Product(code, name, price);
                             product.add(newProduct);
 
                             System.out.println("Este é o nosso estoque de produtos atualizado:");
@@ -154,25 +216,25 @@ public class Supermarket {
                         System.out.println(product);
                         char rmv;
 
+
                         do {
 
                             int code;
-
-                            System.out.print("Digite a posição do produto que deseja remover: ");
+                            System.out.print("Digite o código do produto que deseja remover: ");
                             code = sc.nextInt();
+                            for (Product products : product) {
+                                if(products.getCode() == code) {
+                                    product.remove(products);
+                                    break;
+                                }
+                            }
 
                             System.out.println("Este é o nosso estoque de produtos atualizado:");
                             System.out.println(product);
 
-                            System.out.print("Deseja adicionar um novo produto? Y/N ");
+                            System.out.print("Deseja remover um novo produto? Y/N ");
                             rmv = sc.next().charAt(0);
-
-
-                            product.remove(code - 1);
-
                         } while (rmv == 'Y' || rmv == 'y');
-
-
                         loop = true;
                     } else {
                         System.out.println("Senha incorreta!!");

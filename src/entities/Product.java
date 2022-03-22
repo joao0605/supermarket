@@ -3,20 +3,18 @@ package entities;
 import java.util.Objects;
 
 public class Product {
-    protected Integer code;
+    protected int code;
     protected String name;
     protected Double price;
-    protected Double quantity;
     protected Double totalPrice;
 
     public Product() {
     }
 
-    public Product(Integer code, String name, Double price, Double quantity) {
+    public Product(Integer code, String name, Double price) {
         this.code = code;
         this.name = name;
         this.price = price;
-        this.quantity = quantity;
     }
 
     public Integer getCode() {
@@ -43,24 +41,13 @@ public class Product {
         this.price = price;
     }
 
-    public Double getQuantity() {
-        return quantity;
-    }
-
-    public void setQuantity(Double quantity) {
-        this.quantity = quantity;
-    }
-
-    public Double getTotalPrice() {
-        return price * quantity;
-        }
 
     @Override
     public String toString() {
         return "\n Produto: " + name +
                 ", Código de referência: " + code +
                 ", Preço unitário: " + price +
-                ", Quantidade disponível: " + quantity + '}';
+                 '}';
     }
 
 }
